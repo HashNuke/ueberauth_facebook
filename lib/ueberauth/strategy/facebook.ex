@@ -11,7 +11,8 @@ defmodule Ueberauth.Strategy.Facebook do
       :auth_type,
       :scope,
       :locale,
-      :display
+      :display,
+      :config_id
     ]
 
   alias Ueberauth.Auth.Info
@@ -34,6 +35,7 @@ defmodule Ueberauth.Strategy.Facebook do
       |> maybe_replace_param(conn, "auth_type", :auth_type)
       |> maybe_replace_param(conn, "scope", :default_scope)
       |> maybe_replace_param(conn, "display", :display)
+      |> maybe_replace_param(conn, "config_id", :config_id)
       |> Enum.filter(fn {k, _v} -> Enum.member?(allowed_params, k) end)
       |> Enum.map(fn {k, v} -> {String.to_existing_atom(k), v} end)
       |> Keyword.put(:redirect_uri, callback_url(conn))
